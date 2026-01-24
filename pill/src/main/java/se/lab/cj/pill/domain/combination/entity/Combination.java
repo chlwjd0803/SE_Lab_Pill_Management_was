@@ -26,7 +26,7 @@ public class Combination {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long combinationId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @Column

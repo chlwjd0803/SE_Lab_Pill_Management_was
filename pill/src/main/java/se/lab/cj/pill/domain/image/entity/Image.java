@@ -42,13 +42,13 @@ public class Image {
     @Column(nullable = false)
     private String worker;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String imgMaskedUrl;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String imgProcessedUrl;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String imgOriginUrl;
 
 }
