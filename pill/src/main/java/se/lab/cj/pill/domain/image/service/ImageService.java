@@ -1,6 +1,7 @@
 package se.lab.cj.pill.domain.image.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ImageService {
 
     @Value("${file.upload-dir}")
@@ -99,4 +101,36 @@ public class ImageService {
             if (file.exists()) file.delete();
         }
     }
+
+    @Transactional
+    public void deleteImageSet(Long imageId) {
+        // 1. 이미지 불러오기
+        Image image = imageRepository.findById(imageId).orElseThrow(
+                () -> new IllegalArgumentException("이미지가 없습니다.")
+        );
+
+        // 2. Soft Delete
+        image.delete();
+        imageRepository.save(image);
+
+        // 3. 물리적 삭제
+        try{
+            deletePhysicalFile(image.getImgMaskedUrl());
+            deletePhysicalFile(image.getImgProcessedUrl());
+            deletePhysicalFile(image.getImgOriginUrl());
+        } catch (Exception e){
+            log.error("파일 삭제 중 오류 발생: {}", e.getMessage());
+        }
+    }
+
+    private void deletePhysicalFile(String filePath) {
+        File file = new File(filePath);
+        if (file.exists()) {
+            if (!file.delete()) {
+                throw new RuntimeException("파일 삭제 실패: " + filePath);
+            }
+        }
+    }
+
+
 }

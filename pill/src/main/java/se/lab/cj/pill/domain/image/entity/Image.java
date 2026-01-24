@@ -51,4 +51,8 @@ public class Image {
     @Column(nullable = false)
     private Boolean isDeleted;
 
+    public void delete(){
+        isDeleted = true;
+    }
+
 }
