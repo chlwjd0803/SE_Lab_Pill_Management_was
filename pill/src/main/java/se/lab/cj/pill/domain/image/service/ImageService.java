@@ -3,17 +3,22 @@ package se.lab.cj.pill.domain.image.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import se.lab.cj.pill.domain.combination.entity.Combination;
 import se.lab.cj.pill.domain.combination.repository.CombinationRepository;
-import se.lab.cj.pill.domain.image.dto.TreeResDto;
+import se.lab.cj.pill.domain.image.command.TreeResDto;
 import se.lab.cj.pill.domain.image.entity.Image;
 import se.lab.cj.pill.domain.image.repository.ImageRepository;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,7 +35,7 @@ public class ImageService {
     private final CombinationRepository combinationRepository;
 
     @Transactional
-    public Image uploadImageSet(
+    public void uploadImageSet(
             Long combinationId,
             String worker,
             MultipartFile mask,
@@ -55,9 +60,9 @@ public class ImageService {
         // 3. 이미지 객체 생성
         Image image = Image.builder()
                 .combination(comb)
-                .imgMaskedUrl(uploadDir + comb.getName() + "/" + maskFilaName)
-                .imgProcessedUrl(uploadDir + comb.getName() + "/" + processedFilaName)
-                .imgOriginUrl(uploadDir + comb.getName() + "/" + originFilaName)
+                .imgMaskedUrl(fullPath + maskFilaName)
+                .imgProcessedUrl(fullPath + processedFilaName)
+                .imgOriginUrl(fullPath + originFilaName)
                 .name(comb.getName() + "-" + nextSequence)
                 .worker(worker)
                 .createdAt(LocalDateTime.now())
@@ -85,7 +90,6 @@ public class ImageService {
             throw new RuntimeException("물리 파일 저장 검증 실패");
         }
 
-        return image;
     }
 
     private void saveFile(String path, String fileName, MultipartFile file) throws IOException {
@@ -157,4 +161,22 @@ public class ImageService {
     }
 
 
+    public Resource getImageById(Long imageId) {
+        Image image = imageRepository.findByImageIdAndIsDeleted(imageId, false)
+                .orElseThrow(() -> new IllegalArgumentException("이미지가 없습니다."));
+
+        try {
+            // DB에 저장된 전체 경로를 기반으로 리소스 생성
+            Path filePath = Paths.get(image.getImgOriginUrl());
+            Resource resource = new UrlResource(filePath.toUri());
+
+            if (resource.exists()) {
+                return resource;
+            } else {
+                throw new RuntimeException("파일을 찾을 수 없습니다: " + image.getImgOriginUrl());
+            }
+        } catch (MalformedURLException e) {
+            throw new RuntimeException("파일 경로가 잘못되었습니다.", e);
+        }
+    }
 }

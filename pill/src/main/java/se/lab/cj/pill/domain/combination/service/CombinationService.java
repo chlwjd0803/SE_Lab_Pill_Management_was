@@ -3,7 +3,7 @@ package se.lab.cj.pill.domain.combination.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.lab.cj.pill.domain.combination.repository.CombinationRepository;
-import se.lab.cj.pill.domain.image.dto.TreeResDto;
+import se.lab.cj.pill.domain.image.command.TreeResDto;
 
 import java.util.List;
 import java.util.stream.Collectors;

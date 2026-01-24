@@ -12,7 +12,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import se.lab.cj.pill.domain.combination.entity.Combination;
-
 import java.time.LocalDateTime;
 
 @Entity

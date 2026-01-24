@@ -14,7 +14,7 @@ public class CombinationController {
 
     private final CombinationService combinationService;
 
-    @GetMapping
+    @GetMapping("/tree")
     public ResponseEntity<?> getCombinationTree(){
         return ResponseEntity.ok().body(combinationService.getRootCombinationNodes());
     }

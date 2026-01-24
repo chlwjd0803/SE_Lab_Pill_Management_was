@@ -1,6 +1,7 @@
 package se.lab.cj.pill.domain.image.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,7 @@ public class ImageController {
 
     private final ImageService imageService;
 
-    @GetMapping("/combinations/{combinationId}")
+    @GetMapping("/tree/{combinationId}")
     public ResponseEntity<?> getImageTree(
             @PathVariable Long combinationId
     ){
@@ -28,8 +29,11 @@ public class ImageController {
     }
 
     @GetMapping("/{imageId}")
-    public ResponseEntity<?> getImageById(){
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> getImageById(
+            @PathVariable Long imageId
+    ){
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG)
+                .body(imageService.getImageById(imageId));
     }
 
     @PostMapping
