@@ -31,9 +31,6 @@ public class Image {
     private Combination combination;
 
     @Column(nullable = false)
-    private String url;
-
-    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
@@ -50,5 +47,8 @@ public class Image {
 
     @Column(nullable = false, unique = true)
     private String imgOriginUrl;
+
+    @Column(nullable = false)
+    private Boolean isDeleted;
 
 }

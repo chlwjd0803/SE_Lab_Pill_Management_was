@@ -21,7 +21,7 @@ public class Pill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pillId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private Integer pillNumber;
 
     @Column
@@ -32,4 +32,7 @@ public class Pill {
 
     @Column
     private String sampleImageUrl;
+
+    @Column
+    private Boolean isDeleted;
 }
