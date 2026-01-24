@@ -37,12 +37,18 @@ public class Image {
     private String name;
 
     @Column(nullable = false)
-    private String type;
-
-    @Column(nullable = false)
     private LocalDateTime createdAt;
 
     @Column(nullable = false)
     private String worker;
+
+    @Column(nullable = false)
+    private String imgMaskedUrl;
+
+    @Column(nullable = false)
+    private String imgProcessedUrl;
+
+    @Column(nullable = false)
+    private String imgOriginUrl;
 
 }
