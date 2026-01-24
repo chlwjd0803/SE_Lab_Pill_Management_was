@@ -166,7 +166,8 @@ public class ImageService {
 
         try {
             // DB에 저장된 전체 경로를 기반으로 리소스 생성
-            Path filePath = Paths.get(image.getImgOriginUrl());
+            Path filePath = Paths.get(uploadDir + image.getImgOriginUrl());
+            log.info(filePath.toString());
             Resource resource = new UrlResource(filePath.toUri());
 
             if (resource.exists()) {
