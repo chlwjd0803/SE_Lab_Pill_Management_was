@@ -15,8 +15,11 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
 
     Optional<Image> findByImageIdAndIsDeleted(Long imageId, Boolean isDeleted);
 
-    // 조합 쌍의 Auto Increment 처럼 카운트 하기 위함, false 카운팅 포함하
+    // 조합 쌍의 Auto Increment 처럼 카운트 하기 위함, false 카운팅 포함
     Long countByCombination(Combination combination);
+
+    // 조합 쌍의 실제 저장된 쌍 개수
+    Integer countByCombinationAndIsDeleted(Combination combination, Boolean isDeleted);
 
     // 삭제표식이 없는 모든 조합
     List<Image> findAllByCombinationAndIsDeleted(Combination combination, Boolean isDeleted);

@@ -5,9 +5,8 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class TreeResDto {
-    private Long key;
+public class ImageTreeResDto {
+    private Long imageId;
     private String title;
-    private boolean isLeaf;
     private String type;
 }

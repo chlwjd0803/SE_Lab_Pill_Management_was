@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import se.lab.cj.pill.domain.combination.entity.Combination;
 import se.lab.cj.pill.domain.combination.repository.CombinationRepository;
-import se.lab.cj.pill.domain.image.command.TreeResDto;
+import se.lab.cj.pill.domain.image.command.ImageTreeResDto;
 import se.lab.cj.pill.domain.image.entity.Image;
 import se.lab.cj.pill.domain.image.repository.ImageRepository;
 
@@ -138,15 +138,14 @@ public class ImageService {
     }
 
     // 특정 조합 클릭 시 이미지(파일) 조회
-    public List<TreeResDto> getImageNodesByCombination(Long combinationId) {
+    public List<ImageTreeResDto> getImageNodesByCombination(Long combinationId) {
         Combination comb = combinationRepository.findById(combinationId)
                 .orElseThrow(() -> new IllegalArgumentException("조합이 없습니다."));
 
         return imageRepository.findAllByCombinationAndIsDeleted(comb, false).stream()
-                .map(img -> TreeResDto.builder()
-                        .key(img.getImageId())
+                .map(img -> ImageTreeResDto.builder()
+                        .imageId(img.getImageId())
                         .title(extractFileName(img.getImgOriginUrl())) // 파일명 추출
-                        .isLeaf(true) // 파일이므로 true
                         .type("FILE")
                         .build())
                 .collect(Collectors.toList());
