@@ -1,11 +1,17 @@
 package se.lab.cj.pill.domain.pill.service;
 
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import se.lab.cj.pill.domain.combination.entity.Combination;
 import se.lab.cj.pill.domain.combination.repository.CombinationRepository;
@@ -15,6 +21,7 @@ import se.lab.cj.pill.domain.pill.repository.PillRepository;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PillService {
 
     @Value("${file.sample-dir}")
@@ -41,18 +48,41 @@ public class PillService {
             String sampleNumber = sampleName.replaceAll("\\D", "");
 
             // 4. 약 번호로 Pill검색
-            Pill pill = pillRepository.findByPillNumber(Integer.parseInt(sampleNumber));
+            Pill pill = pillRepository.findByPillNumber(Integer.parseInt(sampleNumber)).orElseThrow(
+                    () -> new IllegalArgumentException("해당 알약샘플이 존재하지 않습니다.")
+            );
 
-            if(pill != null) {
-                dtos.add(SamplePillResDto.builder()
-                        .pillNumber(pill.getPillNumber())
-                        .firstName(pill.getFirstName())
-                        .lastName(pill.getLastName())
-                        .sampleImageUrl(pill.getSampleImageUrl())
-                        .build());
-            }
+            dtos.add(SamplePillResDto.builder()
+                    .pillNumber(pill.getPillNumber())
+                    .firstName(pill.getFirstName())
+                    .lastName(pill.getLastName())
+                    .sampleImageUrl(pill.getSampleImageUrl())
+                    .build());
         }
         // 5. Pill 리스트 반환
         return dtos;
+    }
+
+    public Resource getSampleImage(Integer pillNo){
+//        Pill pill = pillRepository.findById(pillId).orElseThrow(
+//                () -> new IllegalArgumentException("해당 알약샘플이 존재하지 않습니다.")
+//        );
+
+        Pill pill = pillRepository.findByPillNumber(pillNo).orElseThrow(
+                () -> new IllegalArgumentException("해당 알약샘플이 존재하지 않습니다.")
+        );
+
+        try{
+            Path filePath = Paths.get(sampleDir + pill.getSampleImageUrl());
+            Resource resource = new UrlResource(filePath.toUri());
+
+            if(resource.exists()){
+                return resource;
+            } else {
+                throw new RuntimeException("파일을 찾을 수 없습니다: " + sampleDir + pill.getSampleImageUrl());
+            }
+        } catch (MalformedURLException e){
+            throw new RuntimeException("파일 경로가 잘못되었습니다.", e);
+        }
     }
 }

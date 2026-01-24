@@ -16,7 +16,7 @@ spring:
     show-sql: true
 
 file:
-  upload-dir: /Users/chlwjd/All_Project/pill/images/
-  sample-dir: /Users/chlwjd/All_Project/pill/samples/
+  upload-dir: /Users/chlwjd/All_Project/pill/images
+  sample-dir: /Users/chlwjd/All_Project/pill/samples
 
 #  image, samples ???? ???? ???? ??

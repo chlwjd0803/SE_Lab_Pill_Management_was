@@ -172,6 +172,7 @@ public class ImageService {
             if (resource.exists()) {
                 return resource;
             } else {
+                // 경로 수정해야함
                 throw new RuntimeException("파일을 찾을 수 없습니다: " + image.getImgOriginUrl());
             }
         } catch (MalformedURLException e) {

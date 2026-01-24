@@ -4,8 +4,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import se.lab.cj.pill.domain.pill.entity.Pill;
 
+import java.util.Optional;
+
 @Repository
 public interface PillRepository extends JpaRepository<Pill, Long> {
 
-    Pill findByPillNumber(Integer pillNumber);
+    Optional<Pill> findByPillNumber(Integer pillNumber);
 }
