@@ -29,11 +29,12 @@ public class ImageController {
     }
 
     @GetMapping("/{imageId}")
-    public ResponseEntity<?> getImageById(
-            @PathVariable Long imageId
+    public ResponseEntity<?> getImageByIdAndType(
+            @PathVariable Long imageId,
+            @RequestParam String type
     ){
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG)
-                .body(imageService.getImageById(imageId));
+                .body(imageService.getImageByIdAndType(imageId, type));
     }
 
     @PostMapping

@@ -160,13 +160,23 @@ public class ImageService {
     }
 
 
-    public Resource getImageById(Long imageId) {
+    public Resource getImageByIdAndType(Long imageId, String type) {
         Image image = imageRepository.findByImageIdAndIsDeleted(imageId, false)
                 .orElseThrow(() -> new IllegalArgumentException("이미지가 없습니다."));
 
         try {
             // DB에 저장된 전체 경로를 기반으로 리소스 생성
-            Path filePath = Paths.get(uploadDir + image.getImgOriginUrl());
+            Path filePath;
+            if(type.equals("mask"))
+                filePath = Paths.get(uploadDir + image.getImgMaskedUrl());
+            else if(type.equals("processed"))
+                filePath = Paths.get(uploadDir + image.getImgProcessedUrl());
+            else if(type.equals("origin"))
+                filePath = Paths.get(uploadDir + image.getImgOriginUrl());
+            else
+                throw new IllegalArgumentException("유효하지 않은 유형 이미지 입니다. (not.. mask, processed, origin)");
+
+            filePath = Paths.get(uploadDir + image.getImgOriginUrl());
             log.info(filePath.toString());
             Resource resource = new UrlResource(filePath.toUri());
 
