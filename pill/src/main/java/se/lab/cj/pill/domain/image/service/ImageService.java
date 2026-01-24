@@ -5,17 +5,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import se.lab.cj.pill.domain.combination.entity.Combination;
 import se.lab.cj.pill.domain.combination.repository.CombinationRepository;
-import se.lab.cj.pill.domain.image.command.ImageUploaderInfoDto;
+import se.lab.cj.pill.domain.image.dto.TreeResDto;
 import se.lab.cj.pill.domain.image.entity.Image;
 import se.lab.cj.pill.domain.image.repository.ImageRepository;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -130,6 +131,29 @@ public class ImageService {
                 throw new RuntimeException("파일 삭제 실패: " + filePath);
             }
         }
+    }
+
+    // 특정 조합 클릭 시 이미지(파일) 조회
+    public List<TreeResDto> getImageNodesByCombination(Long combinationId) {
+        Combination comb = combinationRepository.findById(combinationId)
+                .orElseThrow(() -> new IllegalArgumentException("조합이 없습니다."));
+
+        return imageRepository.findAllByCombinationAndIsDeleted(comb, false).stream()
+                .map(img -> TreeResDto.builder()
+                        .key(img.getImageId())
+                        .title(extractFileName(img.getImgOriginUrl())) // 파일명 추출
+                        .isLeaf(true) // 파일이므로 true
+                        .type("FILE")
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    private String extractFileName(String filePath) {
+        if (filePath == null || filePath.isEmpty()) {
+            return "";
+        }
+        // 경로 구분자(/)의 마지막 위치를 찾아 그 이후의 문자열만 반환
+        return filePath.substring(filePath.lastIndexOf("/") + 1);
     }
 
 

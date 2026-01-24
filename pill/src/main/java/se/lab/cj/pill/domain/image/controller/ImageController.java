@@ -20,10 +20,11 @@ public class ImageController {
 
     private final ImageService imageService;
 
-
-    @GetMapping
-    public ResponseEntity<?> getImageDirectory(){
-        return ResponseEntity.ok().build();
+    @GetMapping("/combinations/{combinationId}")
+    public ResponseEntity<?> getImageTree(
+            @PathVariable Long combinationId
+    ){
+        return ResponseEntity.ok(imageService.getImageNodesByCombination(combinationId));
     }
 
     @GetMapping("/{imageId}")
