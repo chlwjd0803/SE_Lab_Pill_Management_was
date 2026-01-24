@@ -55,14 +55,14 @@ public class ImageService {
         String processedFilaName = nextSequence + "-" + comb.getName() + "-processed.jpg";
         String originFilaName = nextSequence + "-" + comb.getName() + "-origin.jpg";
 
-        String fullPath = uploadDir + comb.getName() + "/";
+        String relativePath = "/" + comb.getName() + "/";
 
         // 3. 이미지 객체 생성
         Image image = Image.builder()
                 .combination(comb)
-                .imgMaskedUrl(fullPath + maskFilaName)
-                .imgProcessedUrl(fullPath + processedFilaName)
-                .imgOriginUrl(fullPath + originFilaName)
+                .imgMaskedUrl(relativePath + maskFilaName)
+                .imgProcessedUrl(relativePath + processedFilaName)
+                .imgOriginUrl(relativePath + originFilaName)
                 .name(comb.getName() + "-" + nextSequence)
                 .worker(worker)
                 .createdAt(LocalDateTime.now())
@@ -73,36 +73,36 @@ public class ImageService {
 
         // 4. 파일 물리 저장 시도
         try {
-            saveFile(fullPath, maskFilaName, mask);
-            saveFile(fullPath, processedFilaName, processed);
-            saveFile(fullPath, originFilaName, origin);
+            saveFile(relativePath, maskFilaName, mask);
+            saveFile(relativePath, processedFilaName, processed);
+            saveFile(relativePath, originFilaName, origin);
         } catch (IOException e) {
             // 파일 저장 실패 시 생성했던 파일들 삭제 (Cleanup)
-            deletePhysicalFiles(fullPath, maskFilaName, processedFilaName, originFilaName);
+            deletePhysicalFiles(relativePath, maskFilaName, processedFilaName, originFilaName);
             // 런타임 예외를 던져 DB 트랜잭션 롤백 유도
             throw new RuntimeException("파일 저장 중 오류가 발생하여 롤백합니다.", e);
         }
 
         // 5. 저장 검증
-        if (!new File(fullPath + maskFilaName).exists() ||
-                !new File(fullPath + processedFilaName).exists() ||
-                !new File(fullPath + originFilaName).exists()) {
+        if (!new File(uploadDir + relativePath + maskFilaName).exists() ||
+                !new File(uploadDir + relativePath + processedFilaName).exists() ||
+                !new File(uploadDir + relativePath + originFilaName).exists()) {
             throw new RuntimeException("물리 파일 저장 검증 실패");
         }
 
     }
 
     private void saveFile(String path, String fileName, MultipartFile file) throws IOException {
-        File directory = new File(path);
+        File directory = new File(uploadDir + path);
         if (!directory.exists()) directory.mkdirs(); // 날짜별 폴더 자동 생성
 
-        File targetFile = new File(path + fileName);
+        File targetFile = new File(uploadDir + path + fileName);
         file.transferTo(targetFile); // 물리적 쓰기
     }
 
     private void deletePhysicalFiles(String path, String... fileNames) {
         for (String name : fileNames) {
-            File file = new File(path + name);
+            File file = new File(uploadDir + path + name);
             if (file.exists()) file.delete();
         }
     }
@@ -120,9 +120,9 @@ public class ImageService {
 
         // 3. 물리적 삭제
         try{
-            deletePhysicalFile(image.getImgMaskedUrl());
-            deletePhysicalFile(image.getImgProcessedUrl());
-            deletePhysicalFile(image.getImgOriginUrl());
+            deletePhysicalFile(uploadDir + image.getImgMaskedUrl());
+            deletePhysicalFile(uploadDir + image.getImgProcessedUrl());
+            deletePhysicalFile(uploadDir + image.getImgOriginUrl());
         } catch (Exception e){
             log.error("파일 삭제 중 오류 발생: {}", e.getMessage());
         }
