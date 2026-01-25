@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import se.lab.cj.pill.domain.combination.entity.Combination;
 import se.lab.cj.pill.domain.combination.repository.CombinationRepository;
 import se.lab.cj.pill.domain.pill.command.SamplePillResDto;
@@ -30,6 +31,7 @@ public class PillService {
     private final PillRepository pillRepository;
     private final CombinationRepository combinationRepository;
 
+    @Transactional(readOnly = true)
     public List<SamplePillResDto> getCombinationPillSamples(Long combinationId) {
         // 1. 조합 검색
         Combination combination = combinationRepository.findById(combinationId).orElseThrow(
@@ -63,6 +65,7 @@ public class PillService {
         return dtos;
     }
 
+    @Transactional(readOnly = true)
     public Resource getSampleImage(Integer pillNo){
 //        Pill pill = pillRepository.findById(pillId).orElseThrow(
 //                () -> new IllegalArgumentException("해당 알약샘플이 존재하지 않습니다.")

@@ -138,6 +138,7 @@ public class ImageService {
     }
 
     // 특정 조합 클릭 시 이미지(파일) 조회
+    @Transactional(readOnly = true)
     public List<ImageTreeResDto> getImageNodesByCombination(Long combinationId) {
         Combination comb = combinationRepository.findById(combinationId)
                 .orElseThrow(() -> new IllegalArgumentException("조합이 없습니다."));
@@ -160,6 +161,7 @@ public class ImageService {
     }
 
 
+    @Transactional(readOnly = true)
     public Resource getImageByIdAndType(Long imageId, String type) {
         Image image = imageRepository.findByImageIdAndIsDeleted(imageId, false)
                 .orElseThrow(() -> new IllegalArgumentException("이미지가 없습니다."));
@@ -176,7 +178,6 @@ public class ImageService {
             else
                 throw new IllegalArgumentException("유효하지 않은 유형 이미지 입니다. (not.. mask, processed, origin)");
 
-            filePath = Paths.get(uploadDir + image.getImgOriginUrl());
             log.info(filePath.toString());
             Resource resource = new UrlResource(filePath.toUri());
 

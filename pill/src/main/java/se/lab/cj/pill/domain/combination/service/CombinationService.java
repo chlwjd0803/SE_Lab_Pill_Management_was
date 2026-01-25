@@ -2,6 +2,7 @@ package se.lab.cj.pill.domain.combination.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import se.lab.cj.pill.domain.combination.repository.CombinationRepository;
 import se.lab.cj.pill.domain.image.command.CombinationTreeResDto;
 import se.lab.cj.pill.domain.image.repository.ImageRepository;
@@ -17,6 +18,7 @@ public class CombinationService {
     private final ImageRepository imageRepository;
 
     // 조합 리스트(폴더) 조회
+    @Transactional(readOnly = true)
     public List<CombinationTreeResDto> getRootCombinationNodes() {
         return combinationRepository.findAll().stream()
                 .map(comb -> CombinationTreeResDto.builder()
@@ -31,6 +33,7 @@ public class CombinationService {
     }
 
     // 조합에 찍힌 세트의 개수
+    @Transactional(readOnly = true)
     public Integer getCombinationCaptureCount(Long combinationId) {
         return imageRepository.countByCombinationAndIsDeleted(
                 combinationRepository.findById(combinationId).orElseThrow(
