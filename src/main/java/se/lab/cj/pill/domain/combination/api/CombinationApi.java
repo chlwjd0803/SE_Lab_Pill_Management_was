@@ -15,7 +15,7 @@ public interface CombinationApi {
 
     @Operation(summary = "조합식 전체(트리) 조회", description = "조합식과 연관된 정보들을 가져옵니다.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "조회 성공",
+            @ApiResponse(responseCode = "200", description = "업로드 성공",
                     content = @Content(mediaType = "application/json", examples = {
                             @ExampleObject(value = """
                                     [
@@ -38,7 +38,6 @@ public interface CombinationApi {
                                                 "type": "DIRECTORY"
                                             }
                                     ]
-                                    
                                     """)
                     })),
             @ApiResponse(responseCode = "500", description = "모든 오류(4XX에러 포함)")
