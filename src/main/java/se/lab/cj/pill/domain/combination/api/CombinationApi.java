@@ -47,6 +47,36 @@ public interface CombinationApi {
     public ResponseEntity<?> getCombinationTree();
 
 
+    @Operation(summary = "조합식 알약 샘플 정보", description = "조합식에 포함된 알약 샘플 정보들을 가져옵니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "조회 성공",
+                    content = @Content(mediaType = "application/json", examples = {
+                            @ExampleObject(value = """
+                                    [
+                                        {
+                                            "firstName": "SK",
+                                            "lastName": "J200",
+                                            "pillNumber": 2,
+                                            "sampleImageUrl": "/p_2.png"
+                                        },
+                                        {
+                                            "firstName": "아서틸정4mg",
+                                            "lastName": "한국세르비에",
+                                            "pillNumber": 10,
+                                            "sampleImageUrl": "/p_10.png"
+                                        },
+                                        {
+                                            "firstName": "Bayer",
+                                            "lastName": "",
+                                            "pillNumber": 12,
+                                            "sampleImageUrl": "/p_12.png"
+                                        }
+                                    ]
+                                    
+                                    """)
+                    })),
+            @ApiResponse(responseCode = "500", description = "모든 오류(4XX에러 포함)")
+    })
     @GetMapping("/{combinationId}/pillSample")
     public ResponseEntity<?> getCombinationPillSamples(
             @PathVariable Long combinationId
