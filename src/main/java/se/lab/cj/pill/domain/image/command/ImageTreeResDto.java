@@ -7,6 +7,8 @@ import lombok.Getter;
 @Builder
 public class ImageTreeResDto {
     private Long imageId;
-    private String title;
+    private String maskImageUrl;
+    private String processedImageUrl;
+    private String originImageUrl;
     private String type;
 }

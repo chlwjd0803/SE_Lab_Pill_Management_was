@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import se.lab.cj.pill.domain.combination.entity.Combination;
 import se.lab.cj.pill.domain.combination.repository.CombinationRepository;
+import se.lab.cj.pill.domain.image.api.ImageApi;
 import se.lab.cj.pill.domain.image.command.ImageTreeResDto;
 import se.lab.cj.pill.domain.image.entity.Image;
 import se.lab.cj.pill.domain.image.repository.ImageRepository;
@@ -146,7 +147,9 @@ public class ImageService {
         return imageRepository.findAllByCombinationAndIsDeleted(comb, false).stream()
                 .map(img -> ImageTreeResDto.builder()
                         .imageId(img.getImageId())
-                        .title(extractFileName(img.getImgOriginUrl())) // 파일명 추출
+                        .maskImageUrl(img.getImgMaskedUrl().substring(img.getImgMaskedUrl().lastIndexOf("/") + 1))
+                        .processedImageUrl(img.getImgProcessedUrl().substring(img.getImgProcessedUrl().lastIndexOf("/") + 1))
+                        .originImageUrl(img.getImgOriginUrl().substring(img.getImgOriginUrl().lastIndexOf("/") + 1))
                         .type("FILE")
                         .build())
                 .collect(Collectors.toList());

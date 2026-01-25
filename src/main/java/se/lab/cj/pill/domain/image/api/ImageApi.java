@@ -18,17 +18,19 @@ import org.springframework.web.multipart.MultipartFile;
 @Tag(name = "Image API", description = "촬영 관련 주요 API 입니다.")
 public interface ImageApi {
 
-    @Operation(summary = "조합식 전체(트리) 조회", description = "조합식과 연관된 정보들을 가져옵니다.")
+    @Operation(summary = "조합식 촬영 이미지들(트리) 조회", description = "해당 조합식에서 촬영한 이미지들의 파일명들을 조회합니다.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "업로드 성공",
+            @ApiResponse(responseCode = "200", description = "조회 성공",
                     content = @Content(mediaType = "application/json", examples = {
                             @ExampleObject(value = """
                                     [
-                                         {
-                                             "imageId": 1,
-                                             "title": "1-p_2 p_5 p_17 p_19-origin.jpg",
-                                             "type": "FILE"
-                                         }
+                                        {
+                                            "imageId": 2,
+                                            "maskImageUrl": "2-p_2 p_5 p_17 p_19-mask.jpg",
+                                            "originImageUrl": "2-p_2 p_5 p_17 p_19-origin.jpg",
+                                            "processedImageUrl": "2-p_2 p_5 p_17 p_19-processed.jpg",
+                                            "type": "FILE"
+                                        }
                                     ]
                                     """)
                     })),
@@ -40,7 +42,7 @@ public interface ImageApi {
     );
 
 
-    @Operation(summary = "이미지 조회", description = "저장된 촬영 이미지를 조회합니다. " +
+    @Operation(summary = "단일 이미지 조회", description = "저장된 촬영 이미지를 조회합니다. " +
             "이미지 자체의 주키와 type에는 origin(원본), processed(보정처리), mask(약봉지)를 파라미터로 주입합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "조회 성공 (사진정보)"),
