@@ -8,13 +8,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import se.lab.cj.pill.domain.combination.api.CombinationApi;
 import se.lab.cj.pill.domain.combination.service.CombinationService;
 import se.lab.cj.pill.domain.pill.service.PillService;
 
 @RestController
 @RequestMapping("/api/combinations")
 @RequiredArgsConstructor
-public class CombinationController {
+public class CombinationController implements CombinationApi {
 
     private final CombinationService combinationService;
     private final PillService pillService;

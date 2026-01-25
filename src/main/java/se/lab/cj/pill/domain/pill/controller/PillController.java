@@ -7,12 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import se.lab.cj.pill.domain.pill.api.PillApi;
 import se.lab.cj.pill.domain.pill.service.PillService;
 
 @RestController
 @RequestMapping("/api/pills")
 @RequiredArgsConstructor
-public class PillController {
+public class PillController implements PillApi {
 
     private final PillService pillService;
 

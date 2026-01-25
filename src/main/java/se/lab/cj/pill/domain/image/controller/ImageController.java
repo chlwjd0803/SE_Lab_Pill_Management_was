@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import se.lab.cj.pill.domain.image.api.ImageApi;
 import se.lab.cj.pill.domain.image.service.ImageService;
 
 @RestController
 @RequestMapping("/api/images")
 @RequiredArgsConstructor
-public class ImageController {
+public class ImageController implements ImageApi {
 
     private final ImageService imageService;
 
