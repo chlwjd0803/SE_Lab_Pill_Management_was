@@ -41,6 +41,9 @@ public class Combination {
     @Column(nullable = false)
     private String worker;
 
+    @Column(nullable = false)
+    private Boolean isDeleted;
+
     @OneToMany(mappedBy = "combination")
     private List<Image> images = new ArrayList<>();
 }

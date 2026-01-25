@@ -7,19 +7,21 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 public class Pill {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pillId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private Integer pillNumber;
 
     @Column
@@ -30,4 +32,7 @@ public class Pill {
 
     @Column
     private String sampleImageUrl;
+
+    @Column
+    private Boolean isDeleted;
 }
