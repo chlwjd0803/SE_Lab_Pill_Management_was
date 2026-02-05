@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 import se.lab.cj.pill.domain.pill.api.PillApi;
 import se.lab.cj.pill.domain.pill.service.PillService;
 
+/**
+ * 알약 컨트롤러
+ *
+ * 해당 클래스에 대한 명세서는 PillApi 인터페이스에 작성되어있으므로 생략합니다.
+ */
 @RestController
 @RequestMapping("/api/pills")
 @RequiredArgsConstructor
