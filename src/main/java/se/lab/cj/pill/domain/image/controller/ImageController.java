@@ -15,6 +15,11 @@ import org.springframework.web.multipart.MultipartFile;
 import se.lab.cj.pill.domain.image.api.ImageApi;
 import se.lab.cj.pill.domain.image.service.ImageService;
 
+/**
+ * 이미지 컨트롤러
+ *
+ * 해당 컨트롤러에 대한 명세서는 ImageApi 인터페이스에 작성하였습니다.
+ */
 @RestController
 @RequestMapping("/api/images")
 @RequiredArgsConstructor
