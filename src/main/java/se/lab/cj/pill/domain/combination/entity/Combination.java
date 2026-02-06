@@ -17,11 +17,12 @@ import java.util.List;
 
 
 /**
+ * @author 최정
+ * @since 2026.01.24
+ *     since    |    author    | description
+ *  2026.01.24  |     최정      | 최초 등록
+ *
  * 조합식 엔티티
- *
- * 명목상 필드는 현재 실제로 값이 오가는 필드가 아니며 이후에 필요할 시 연산에 쓰시면 됩니다.
- *
- * 최초 생성자 : 최정
  */
 @Entity
 @AllArgsConstructor
