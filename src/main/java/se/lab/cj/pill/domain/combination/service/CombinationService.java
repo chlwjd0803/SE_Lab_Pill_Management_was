@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.lab.cj.pill.domain.combination.repository.CombinationRepository;
-import se.lab.cj.pill.domain.image.command.CombinationTreeResDto;
+import se.lab.cj.pill.domain.combination.command.CombinationTreeResDto;
 import se.lab.cj.pill.domain.image.repository.ImageRepository;
 
 import java.util.List;

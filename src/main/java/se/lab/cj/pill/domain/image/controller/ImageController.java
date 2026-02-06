@@ -16,9 +16,12 @@ import se.lab.cj.pill.domain.image.api.ImageApi;
 import se.lab.cj.pill.domain.image.service.ImageService;
 
 /**
- * 이미지 컨트롤러
+ * @author 최정
+ * @since 2026.01.24
+ *     since    |    author    | description
+ *  2026.01.24  |     최정      | 최초 등록
  *
- * 해당 컨트롤러에 대한 명세서는 ImageApi 인터페이스에 작성하였습니다.
+ * 이미지 컨트롤러
  */
 @RestController
 @RequestMapping("/api/images")
