@@ -4,9 +4,12 @@ import lombok.Builder;
 import lombok.Data;
 
 /**
- * 샘플 알약 정보 응답 DTO
+ * @author 최정
+ * @since 2026.01.24
+ *     since    |    author    | description
+ *  2026.01.24  |     최정      | 최초 등록
  *
- * 최초 작성자 : 최정
+ * 알약 샘플 정보 응답 DTO
  */
 @Data
 @Builder

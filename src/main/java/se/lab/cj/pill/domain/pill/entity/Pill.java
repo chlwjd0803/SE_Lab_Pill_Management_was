@@ -11,9 +11,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * 알약 엔티티
+ * @author 최정
+ * @since 2026.01.24
+ *     since    |    author    | description
+ *  2026.01.24  |     최정      | 최초 등록
  *
- * 최초 생성자 : 최정
+ * 알약 엔티티
  */
 @Entity
 @Builder

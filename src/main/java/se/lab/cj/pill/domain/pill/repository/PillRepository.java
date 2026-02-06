@@ -7,11 +7,13 @@ import se.lab.cj.pill.domain.pill.entity.Pill;
 import java.util.Optional;
 
 /**
- * 알약 JPA Repository
+ * @author 최정
+ * @since 2026.01.24
+ *     since    |    author    | description
+ *  2026.01.24  |     최정      | 최초 등록
  *
- * 최초 작성자 : 최정
+ * 알약 JPA Repository
  */
-@Repository
 public interface PillRepository extends JpaRepository<Pill, Long> {
 
     // 알약번호 기반으로 찾는 메소드

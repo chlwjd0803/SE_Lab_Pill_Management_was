@@ -21,9 +21,12 @@ import se.lab.cj.pill.domain.pill.entity.Pill;
 import se.lab.cj.pill.domain.pill.repository.PillRepository;
 
 /**
- * 알약 샘플 서비스
+ * @author 최정
+ * @since 2026.01.24
+ *     since    |    author    | description
+ *  2026.01.24  |     최정      | 최초 등록
  *
- * 최초 작성자 : 최정
+ * 알약 샘플 서비스
  */
 @Service
 @RequiredArgsConstructor

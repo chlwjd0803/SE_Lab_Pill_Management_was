@@ -18,7 +18,6 @@ import java.util.Optional;
  *
  * 이미지 JPA Repository
  */
-@Repository
 public interface ImageRepository extends JpaRepository<Image, Long> {
 
     // 주키와 삭제여부로 검색. 일반적으로 쓰이는 조회 쿼리메소드
