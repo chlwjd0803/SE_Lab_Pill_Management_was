@@ -15,6 +15,14 @@ import org.springframework.web.multipart.MultipartFile;
 import se.lab.cj.pill.domain.image.api.ImageApi;
 import se.lab.cj.pill.domain.image.service.ImageService;
 
+/**
+ * @author 최정
+ * @since 2026.01.24
+ *     since    |    author    | description
+ *  2026.01.24  |     최정      | 최초 등록
+ *
+ * 이미지 컨트롤러
+ */
 @RestController
 @RequestMapping("/api/images")
 @RequiredArgsConstructor

@@ -10,9 +10,17 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+/**
+ * @author 최정
+ * @since 2026.01.24
+ *     since    |    author    | description
+ *  2026.01.24  |     최정      | 최초 등록
+ *
+ * 이미지 JPA Repository
+ */
 public interface ImageRepository extends JpaRepository<Image, Long> {
 
+    // 주키와 삭제여부로 검색. 일반적으로 쓰이는 조회 쿼리메소드
     Optional<Image> findByImageIdAndIsDeleted(Long imageId, Boolean isDeleted);
 
     // 조합 쌍의 Auto Increment 처럼 카운트 하기 위함, false 카운팅 포함
